@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM GOODS</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/dashboard" class="brand">CRM GOODS</a>
+            <ul class="nav-links">
+                <% if (user) { %>
+                    <li><a href="/parcels">Посылки</a></li>
+                    <% if (user.role === 'admin') { %>
+                        <li><a href="/users">Пользователи</a></li>
+                    <% } %>
+                    <li class="user-info"><span><%= user.full_name %></span> (<%= user.username %>)</li>
+                    <li><a href="/logout" class="btn-outline">Выйти</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container">

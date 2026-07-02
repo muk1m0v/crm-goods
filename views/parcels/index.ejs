@@ -1,0 +1,60 @@
+<%- include('../partials/header') %>
+
+<div class="flex" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+    <h1>Посылки</h1>
+    <% if (isAdmin) { %>
+        <a href="/parcels/new" class="btn btn-primary">+ Новая посылка</a>
+    <% } %>
+</div>
+
+<% if (parcels && parcels.length > 0) { %>
+    <div class="table-wrap card">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Трек-номер</th>
+                    <th>Имя карго</th>
+                    <th>Вес (кг)</th>
+                    <th>Куб (м³)</th>
+                    <th>Получатель</th>
+                    <th>Телефон</th>
+                    <th>Статус</th>
+                    <th>Оплачено</th>
+                    <% if (isAdmin) { %>
+                        <th>Действия</th>
+                    <% } %>
+                </tr>
+            </thead>
+            <tbody>
+                <% parcels.forEach(p => { %>
+                <tr>
+                    <td><%= p.id %></td>
+                    <td><%= p.tracking_number || '—' %></td>
+                    <td><%= p.cargo_name %></td>
+                    <td><%= p.weight %></td>
+                    <td><%= p.cube ? p.cube : '—' %></td>
+                    <td><%= p.full_name %></td>
+                    <td><%= p.phone %></td>
+                    <td><%= p.status || '—' %></td>
+                    <td><%= p.paid ? '✅ Оплачено' : '❌ Не оплачено' %></td>
+                    <% if (isAdmin) { %>
+                        <td class="actions">
+                            <a href="/parcels/<%= p.id %>/edit" class="btn btn-sm btn-outline-dark">Редактировать</a>
+                            <form action="/parcels/<%= p.id %>/delete" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Удалить посылку?')">Удалить</button>
+                            </form>
+                        </td>
+                    <% } %>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<% } else { %>
+    <div class="card" style="text-align:center; color:#6b6b6b;">
+        <p>Посылок пока нет.</p>
+    </div>
+<% } %>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+
+<div class="card" style="max-width: 700px; margin: 0 auto;">
+    <h2>Редактирование посылки #<%= parcel.id %></h2>
+    <% if (error) { %>
+        <div class="alert"><%= error %></div>
+    <% } %>
+    <form action="/parcels/<%= parcel.id %>/update" method="POST">
+        <div class="form-group">
+            <label for="cargo_name">Название карго *</label>
+            <input type="text" class="form-control" id="cargo_name" name="cargo_name" value="<%= parcel.cargo_name %>" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="weight">Вес (кг) *</label>
+                <input type="number" step="0.01" class="form-control" id="weight" name="weight" value="<%= parcel.weight %>" required>
+            </div>
+            <div class="form-group">
+                <label for="cube">Куб (м³)</label>
+                <input type="number" step="0.01" class="form-control" id="cube" name="cube" value="<%= parcel.cube || '' %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="tracking_number">Трек-номер</label>
+            <input type="text" class="form-control" id="tracking_number" name="tracking_number" value="<%= parcel.tracking_number || '' %>">
+        </div>
+        <div class="form-group">
+            <label for="status">Статус</label>
+            <select class="form-control" id="status" name="status">
+                <option value="принять на склад в китае" <%= parcel.status === 'принять на склад в китае' ? 'selected' : '' %>>Принять на склад в Китае</option>
+                <option value="в пути" <%= parcel.status === 'в пути' ? 'selected' : '' %>>В пути</option>
+                <option value="в тамоденной проверке" <%= parcel.status === 'в тамоденной проверке' ? 'selected' : '' %>>В таможенной проверке</option>
+                <option value="в сортировке" <%= parcel.status === 'в сортировке' ? 'selected' : '' %>>В сортировке</option>
+                <option value="готов к получению" <%= parcel.status === 'готов к получению' ? 'selected' : '' %>>Готов к получению</option>
+                <option value="получено" <%= parcel.status === 'получено' ? 'selected' : '' %>>Получено</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="paid">
+                <input type="checkbox" id="paid" name="paid" <%= parcel.paid ? 'checked' : '' %>> Оплачено
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Обновить</button>
+        <a href="/parcels" class="btn btn-outline-dark">Отмена</a>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>
