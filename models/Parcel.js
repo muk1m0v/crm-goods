@@ -1,11 +1,11 @@
 const pool = require('../config/db');
 
 class Parcel {
-  static async create({ user_id, weight, cube, username, full_name, phone, cargo_name, tracking_number, paid, status }) {
+  static async create({ user_id, weight, cube, username, full_name, phone, cargo_name, tracking_number, paid, status, delivery_cost }) {
     const result = await pool.query(
-      `INSERT INTO parcels (user_id, weight, cube, username, full_name, phone, cargo_name, tracking_number, paid, status)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
-      [user_id, weight, cube || null, username, full_name, phone, cargo_name, tracking_number, paid || false, status || 'принять на склад в китае']
+      `INSERT INTO parcels (user_id, weight, cube, username, full_name, phone, cargo_name, tracking_number, paid, status, delivery_cost)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
+      [user_id, weight, cube || null, username, full_name, phone, cargo_name, tracking_number, paid || false, status || 'принять на склад в китае', delivery_cost || 0]
     );
     return result.rows[0];
   }
@@ -25,12 +25,12 @@ class Parcel {
     return result.rows;
   }
 
-  static async update(id, { weight, cube, cargo_name, tracking_number, paid, status }) {
+  static async update(id, { weight, cube, cargo_name, tracking_number, paid, status, delivery_cost }) {
     const result = await pool.query(
       `UPDATE parcels 
-       SET weight = $1, cube = $2, cargo_name = $3, tracking_number = $4, paid = $5, status = $6, updated_at = CURRENT_TIMESTAMP
-       WHERE id = $7 RETURNING *`,
-      [weight, cube || null, cargo_name, tracking_number, paid || false, status, id]
+       SET weight = $1, cube = $2, cargo_name = $3, tracking_number = $4, paid = $5, status = $6, delivery_cost = $7, updated_at = CURRENT_TIMESTAMP
+       WHERE id = $8 RETURNING *`,
+      [weight, cube || null, cargo_name, tracking_number, paid || false, status, delivery_cost || 0, id]
     );
     return result.rows[0];
   }

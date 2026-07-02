@@ -21,6 +21,7 @@
                     <th>Телефон</th>
                     <th>Статус</th>
                     <th>Оплачено</th>
+                    <th>Стоимость доставки</th>
                     <% if (isAdmin) { %>
                         <th>Действия</th>
                     <% } %>
@@ -38,6 +39,7 @@
                     <td><%= p.phone %></td>
                     <td><%= p.status || '—' %></td>
                     <td><%= p.paid ? '✅ Оплачено' : '❌ Не оплачено' %></td>
+                    <td><%= p.delivery_cost ? p.delivery_cost.toFixed(2) : '0.00' %> $</td>
                     <% if (isAdmin) { %>
                         <td class="actions">
                             <a href="/parcels/<%= p.id %>/edit" class="btn btn-sm btn-outline-dark">Редактировать</a>

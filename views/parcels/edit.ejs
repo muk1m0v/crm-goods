@@ -36,6 +36,10 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="delivery_cost">Стоимость доставки ($)</label>
+            <input type="number" step="0.01" class="form-control" id="delivery_cost" name="delivery_cost" value="<%= parcel.delivery_cost || 0 %>">
+        </div>
+        <div class="form-group">
             <label for="paid">
                 <input type="checkbox" id="paid" name="paid" <%= parcel.paid ? 'checked' : '' %>> Оплачено
             </label>

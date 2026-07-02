@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar">
         <div class="container nav-container">
-            <a href="/dashboard" class="brand">CRM GOODS</a>
+            <a href="/parcels" class="brand">CRM GOODS</a>
             <ul class="nav-links">
                 <% if (user) { %>
                     <li><a href="/parcels">Посылки</a></li>
@@ -19,6 +19,9 @@
                     <% } %>
                     <li class="user-info"><span><%= user.full_name %></span> (<%= user.username %>)</li>
                     <li><a href="/logout" class="btn-outline">Выйти</a></li>
+                <% } else { %>
+                    <li><a href="/login">Вход</a></li>
+                    <li><a href="/register">Регистрация</a></li>
                 <% } %>
             </ul>
         </div>

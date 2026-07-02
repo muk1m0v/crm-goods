@@ -11,7 +11,7 @@ exports.showNew = (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const { weight, cube, username, full_name, phone, cargo_name, tracking_number, paid, status } = req.body;
+  const { weight, cube, username, full_name, phone, cargo_name, tracking_number, paid, status, delivery_cost } = req.body;
   try {
     await Parcel.create({
       user_id: req.session.user.id,
@@ -22,8 +22,9 @@ exports.create = async (req, res) => {
       phone,
       cargo_name,
       tracking_number,
-      paid: paid === 'on' ? true : false, // чекбокс возвращает 'on' если отмечен
-      status
+      paid: paid === 'on' ? true : false,
+      status,
+      delivery_cost: parseFloat(delivery_cost) || 0
     });
     res.redirect('/parcels');
   } catch (err) {
@@ -39,7 +40,7 @@ exports.showEdit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { weight, cube, cargo_name, tracking_number, paid, status } = req.body;
+  const { weight, cube, cargo_name, tracking_number, paid, status, delivery_cost } = req.body;
   try {
     await Parcel.update(req.params.id, {
       weight,
@@ -47,7 +48,8 @@ exports.update = async (req, res) => {
       cargo_name,
       tracking_number,
       paid: paid === 'on' ? true : false,
-      status
+      status,
+      delivery_cost: parseFloat(delivery_cost) || 0
     });
     res.redirect('/parcels');
   } catch (err) {
